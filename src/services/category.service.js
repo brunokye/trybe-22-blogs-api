@@ -1,10 +1,14 @@
 const { Category } = require('../models');
 
-const getByName = (name) => Category.findOne({ where: { name } });
+const getAll = async () => {
+  const test = await Category.findAll();
 
-const create = async ({ name }) => Category.create({ name });
+  return test;
+};
+
+const create = (name) => Category.create({ name });
 
 module.exports = {
-  getByName,
+  getAll,
   create,
 };
