@@ -13,6 +13,9 @@ const createToken = (email) => {
   return token;
 };
 
+const verifyToken = (token) => jwt.verify(token, secret);
+
 module.exports = {
   createToken,
+  verifyToken,
 };

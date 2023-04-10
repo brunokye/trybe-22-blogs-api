@@ -1,5 +1,5 @@
-const validateCredentials = require('./validateCredentials');
+const validateToken = require('./validateToken');
 
 module.exports = {
-  validateCredentials,
+  validateToken,
 };

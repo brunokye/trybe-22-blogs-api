@@ -1,3 +1,4 @@
+const { userSchema } = require('../schemas');
 const { user } = require('../services');
 const { createToken } = require('../utils/auth');
 
@@ -5,12 +6,13 @@ const { getByEmail, create } = user;
 const isBodyValid = (email, password) => email && password;
 
 const signup = async (req, res) => {
-  const { email } = req.body;
-  const verifyUser = await getByEmail(email);
+  const { displayName, email, password } = req.body;
 
-  if (verifyUser) {
-    return res.status(409).json({ message: 'User already registered' });
-  }
+  const { error } = userSchema.validate({ displayName, email, password });
+  if (error) return res.status(400).json({ message: error.message });
+  
+  const verifyUser = await getByEmail(email);
+  if (verifyUser) return res.status(409).json({ message: 'User already registered' });
   
   await create(req.body);
   const token = await createToken(email);
