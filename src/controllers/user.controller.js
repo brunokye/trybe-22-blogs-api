@@ -2,7 +2,7 @@ const { userSchema } = require('../schemas');
 const { user } = require('../services');
 const { createToken } = require('../utils/auth');
 
-const { getAll, getByEmail, create } = user;
+const { getAll, getById, getByEmail, create } = user;
 const isBodyValid = (email, password) => email && password;
 
 const signup = async (req, res) => {
@@ -47,8 +47,20 @@ const findAll = async (_req, res) => {
   return res.status(200).json(data);
 };
 
+const findOne = async (req, res) => {
+  const { id } = req.params;
+
+  const userId = Number(id);
+  const data = await getById(userId);
+
+  if (!data) return res.status(404).json({ message: 'User does not exist' });
+
+  return res.status(200).json(data);
+};
+
 module.exports = {
   signup,
   login,
   findAll,
+  findOne,
 };
