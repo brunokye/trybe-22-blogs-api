@@ -9,7 +9,6 @@ module.exports = (sequelize, DataTypes) => {
     displayName: {
       allowNull: false,
       type: DataTypes.STRING,
-      field: 'display_name',
     },
     email: {
       allowNull: false,
@@ -21,7 +20,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
     },
     image: {
-      allowNull: false,
       type: DataTypes.STRING,
     },
   },
