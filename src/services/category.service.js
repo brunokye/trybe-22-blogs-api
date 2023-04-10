@@ -1,10 +1,6 @@
 const { Category } = require('../models');
 
-const getAll = async () => {
-  const test = await Category.findAll();
-
-  return test;
-};
+const getAll = () => Category.findAll();
 
 const create = (name) => Category.create({ name });
 
