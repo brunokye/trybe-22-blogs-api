@@ -2,7 +2,7 @@ const { userSchema } = require('../schemas');
 const { user } = require('../services');
 const { createToken } = require('../utils/auth');
 
-const { getByEmail, create } = user;
+const { getAll, getByEmail, create } = user;
 const isBodyValid = (email, password) => email && password;
 
 const signup = async (req, res) => {
@@ -42,7 +42,13 @@ const login = async (req, res) => {
   }
 };
 
+const findAll = async (_req, res) => {
+  const data = await getAll();
+  return res.status(200).json(data);
+};
+
 module.exports = {
   signup,
   login,
+  findAll,
 };

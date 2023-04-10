@@ -13,7 +13,13 @@ const createToken = (email) => {
   return token;
 };
 
-const verifyToken = (token) => jwt.verify(token, secret);
+const verifyToken = (token) => {
+  try {
+    return jwt.verify(token, secret);
+  } catch (e) {
+    console.log(e);
+  }
+};
 
 module.exports = {
   createToken,
