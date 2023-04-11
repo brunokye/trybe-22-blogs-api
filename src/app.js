@@ -1,6 +1,5 @@
 const express = require('express');
-const { loginRouter, userRouter, categoryRouter, 
-  postRouter } = require('./routers');
+const { loginRouter, userRouter, categoryRouter, postRouter } = require('./routers');
 
 const app = express();
 

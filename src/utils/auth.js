@@ -21,7 +21,10 @@ const verifyToken = (token) => {
   }
 };
 
+const decodeToken = (token) => jwt.decode(token, secret);
+
 module.exports = {
   createToken,
   verifyToken,
+  decodeToken,
 };
