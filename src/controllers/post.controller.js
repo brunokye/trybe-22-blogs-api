@@ -1,10 +1,14 @@
 const { post, category } = require('../services');
 
-const { getById, create, createAssociation } = post;
-const { getAll } = category;
+const { getAll, getById, create, createAssociation } = post;
 const isBodyValid = (title, content, categoryIds) => title && content && categoryIds;
 
-const signup = async (req, res) => {
+const findAll = async (_req, res) => {
+  const data = await getAll();
+  return res.status(200).json(data);
+};
+
+const publish = async (req, res) => {
   const { title, content, categoryIds } = req.body;
   const { authorization } = req.headers;
 
@@ -12,7 +16,7 @@ const signup = async (req, res) => {
     return res.status(400).json({ message: 'Some required fields are missing' });
   }
 
-  const getAllCategories = await getAll();
+  const getAllCategories = await category.getAll();
   const getAllIds = getAllCategories.map(({ id }) => id);
   const verifyIds = categoryIds.every((id) => getAllIds.includes(id));
 
@@ -29,5 +33,6 @@ const signup = async (req, res) => {
 };
 
 module.exports = {
-  signup,
+  findAll,
+  publish,
 };

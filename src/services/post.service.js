@@ -1,6 +1,14 @@
 const { auth } = require('../utils');
-const { BlogPost, PostCategory } = require('../models');
+const { User, Category, BlogPost, PostCategory } = require('../models');
 const user = require('./user.service');
+
+const getAll = () => BlogPost.findAll({
+    attributes: { exclude: ['user_id'] },
+    include: [
+      { model: User, as: 'user', attributes: { exclude: ['password'] } },
+      { model: Category, as: 'categories' },
+    ],
+});
 
 const getById = async (token) => {
   const decode = auth.decodeToken(token);
@@ -10,7 +18,7 @@ const getById = async (token) => {
   return userId.dataValues.id;
 };
 
-const create = ({ title, content, userId }) => 
+const create = ({ title, content, userId }) =>
   BlogPost.create({ title, content, userId });
 
 const createAssociation = (postId, categories) => {
@@ -24,11 +32,12 @@ const createAssociation = (postId, categories) => {
 
     newArray.push(newObject);
   });
-  
+
   return PostCategory.bulkCreate(newArray);
 };
 
 module.exports = {
+  getAll,
   getById,
   create,
   createAssociation,
